@@ -4,7 +4,7 @@ import { postFixPopulaionWithLetter } from './post-fixer';
 const computedCountryDetails = (country_name: string) => {
     return Object.values(countries)
         .filter(country => {
-            const countryName = country_name.replace('_', ' ')
+            const countryName = country_name.replace('%20', ' ')
             return country.name === countryName && country
         })
         .map(country => {
@@ -18,7 +18,7 @@ const computedCountryDetails = (country_name: string) => {
                 sub_region: country.subregion,
                 population: postFixPopulaionWithLetter(country.population),
                 time_zone: country.timezones[0],
-                currency: Object.values(country.currencies)[0].name,
+                currency: Object.values(country.currencies)[0],
                 languages: Object.values(country.languages).map((item) => `${item}`)
             }
         })[0];
