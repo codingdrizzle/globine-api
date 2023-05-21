@@ -1,12 +1,10 @@
 import countries from '../countries.json';
 import { postFixPopulaionWithLetter } from './post-fixer';
 
-const computedCountryDetails = (country_name: string) => {
+const computeFilteredCountries = (filter_key: string) => {
     return Object.values(countries)
-        .filter(country => {
-            const countryName = country_name.replace('%20', ' ')
-            return country.name === countryName && country
-        })
+        .sort((a, b) => a.name < b.name ? - 1 : a.name > b.name ? 1 : 0)
+        .filter((country) => country.region === filter_key)
         .map(country => {
             return {
                 name: country.name,
@@ -19,9 +17,9 @@ const computedCountryDetails = (country_name: string) => {
                 population: postFixPopulaionWithLetter(country.population),
                 time_zone: country.timezones[0],
                 currency: Object.values(country.currencies)[0],
-                languages: Object.values(country.languages)
+                languages: Object.values(country.languages).map((item) => `${item}`)
             }
-        })[0];
+        });
 }
 
-export { computedCountryDetails }
+export { computeFilteredCountries }
