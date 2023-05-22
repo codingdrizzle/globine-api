@@ -1,9 +1,14 @@
 import axios from 'axios'
 
-export const axiosClient = axios.create({
-    baseURL: `${process.env.API_URL}`,
+export interface ICredentials {
+    baseURL: string;
+    key?: string
+} 
+
+export const axiosClient = (CREDENTIALS: ICredentials) => axios.create({
+    baseURL: `${CREDENTIALS.baseURL}`,
     params: {
-        key: `${process.env.API_TOKEN}`,
+        key: `${CREDENTIALS.key}`,
     },
     timeout: 10000,
 })
